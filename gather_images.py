@@ -40,21 +40,37 @@ except FileExistsError:
 
 cap = cv2.VideoCapture(0)
 
+# Set window/frame size
+WINDOW_WIDTH = 1000
+WINDOW_HEIGHT = 700
+BOX_SIZE = 400
+box_x1 = (WINDOW_WIDTH - BOX_SIZE) // 2
+box_y1 = (WINDOW_HEIGHT - BOX_SIZE) // 2
+box_x2 = box_x1 + BOX_SIZE
+box_y2 = box_y1 + BOX_SIZE
+
 start = False
 count = 0
 
 while True:
+
     ret, frame = cap.read()
     if not ret:
         continue
 
+    # Resize frame to window size
+    frame = cv2.resize(frame, (WINDOW_WIDTH, WINDOW_HEIGHT))
+    # Flip horizontally so webcam behaves like a mirror
+    frame = cv2.flip(frame, 1)
+
     if count == num_samples:
         break
 
-    cv2.rectangle(frame, (100, 100), (500, 500), (255, 255, 255), 2)
+    # Draw centered box
+    cv2.rectangle(frame, (box_x1, box_y1), (box_x2, box_y2), (255, 255, 255), 2)
 
     if start:
-        roi = frame[100:500, 100:500]
+        roi = frame[box_y1:box_y2, box_x1:box_x2]
         save_path = os.path.join(IMG_CLASS_PATH, '{}.jpg'.format(count + 1))
         cv2.imwrite(save_path, roi)
         count += 1

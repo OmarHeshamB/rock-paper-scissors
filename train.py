@@ -1,8 +1,9 @@
 import cv2
 import numpy as np
-from keras_squeezenet import SqueezeNet
+from tensorflow.keras.applications import MobileNetV2
 from keras.optimizers import Adam
-from keras.utils import np_utils
+from tensorflow.keras.utils import to_categorical
+from tensorflow.keras.optimizers import Adam
 from keras.layers import Activation, Dropout, Convolution2D, GlobalAveragePooling2D
 from keras.models import Sequential
 import tensorflow as tf
@@ -25,8 +26,14 @@ def mapper(val):
 
 
 def get_model():
+    base_model = MobileNetV2(
+        input_shape=(227, 227, 3),
+        include_top=False,
+        weights='imagenet'
+    )
+
     model = Sequential([
-        SqueezeNet(input_shape=(227, 227, 3), include_top=False),
+        base_model,
         Dropout(0.5),
         Convolution2D(NUM_CLASSES, (1, 1), padding='valid'),
         Activation('relu'),
@@ -68,12 +75,12 @@ one hot encoded: [1,0,0], [0,1,0], [0,1,0], [0,0,1], [1,0,0]...
 '''
 
 # one hot encode the labels
-labels = np_utils.to_categorical(labels)
+labels = to_categorical(labels)
 
 # define the model
 model = get_model()
 model.compile(
-    optimizer=Adam(lr=0.0001),
+    optimizer=Adam(learning_rate=0.0001),
     loss='categorical_crossentropy',
     metrics=['accuracy']
 )
