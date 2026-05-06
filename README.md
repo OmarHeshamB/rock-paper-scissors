@@ -1,6 +1,6 @@
 # Rock Paper Scissors AI Game
 
-![visitors](https://visitor-badge.glitch.me/badge?page_id=yourusername.rock-paper-scissors)
+![visitors](https://visitor-badge.glitch.me/badge?page_id=OBADR01.rock-paper-scissors)
 
 A computer vision-based Rock Paper Scissors game where you play against an AI using your webcam. The AI predicts your hand gestures in real-time using a trained machine learning model.
 
@@ -25,7 +25,7 @@ A computer vision-based Rock Paper Scissors game where you play against an AI us
 
 1. Clone the repository:
 ```sh
-git clone https://github.com/yourusername/rock-paper-scissors.git
+git clone https://github.com/OBADR01/rock-paper-scissors.git
 cd rock-paper-scissors
 ```
 
